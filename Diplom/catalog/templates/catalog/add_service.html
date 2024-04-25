@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Добавление специалиста{% endblock %}
+{% block content %}
+    <div class="New-service">
+        <div class="New-service-content">
+            <h1>Добавление новой услуги</h1>
+            <form method="post" enctype="multipart/form-data" class="add-service">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Сохранить</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

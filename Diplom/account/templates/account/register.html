@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="registration">
+        <div class="logcontainer">
+            <div class="login form">
+                <form action="" method="POST">
+                    {% csrf_token %}
+
+                    <div class="form-error">{{ form.non_field_errors }}</div>
+                    <header>Регистрация пользователя</header>
+                    {% for f in form %}
+                        <label class="hidden" for="{{ f.id_for_label }}">{{ f.label }}: </label>{{ f }}
+                        <div class="form-error">{{ f.errors }}</div>
+                    {% endfor %}
+                    <button class="button" type="submit">Регистрация</button>
+                    <div class="signup">
+                      <span class="регистрация">Есть учетная запись ?
+                         <a href="{% url 'account:login' %}">Войти</a>
+                      </span>
+                    </div>
+                    <div class="signup">
+                      <span class="регистрация">Зарегистрироваться от лица компании ?
+                         <a href="{% url 'account:organisation' %}">Регистрация</a>
+                      </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

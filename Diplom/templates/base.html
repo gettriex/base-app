@@ -1,0 +1,130 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+<header>
+    <div class="contik">
+        <a href="{% url "home" %}">SNACKSTAND</a>
+        <div class="search-container">
+            <nav class="navigation">
+                <ul class="navigation-content">
+                    {% if user.is_authenticated %}
+                        <li> {{ user.username }} <a href="{% url "account:logout" %}">Выйти</a></li>
+                    {% else %}
+                        <ul class="navigation-content-position">
+                        <li><a href=    "{% url "account:login" %}">Войти</a><a href="{% url "account:registration" %}">Регистрация</a>
+                        </li>
+                    {% endif %}
+                    <li><a href="{% url "account:organisation" %}">Регистрация услуги</a></li>
+                    <li><a href="{% url "catalog:index" %}">Каталог услуг</a></li>
+                    <li><a href="{% url "company" %}">Специалисты</a></li>
+                    <li><a href="{% url "catalog:add_service" %}">Добавление товара</a></li>
+                    </ul>
+                    {#                <li><a href="#">Согласовать время</a></li>#}
+                    {#                <li><a id="modalBtn" class="modal-btn">Открыть модальное окно</a></li>#}
+                </ul>
+            </nav>
+        </div>
+    </div>
+    {#    <input class="menu-icon" type="checkbox" id="menu-icon" name="menu-icon"/>#}
+    {#    <label for="menu-icon"></label>#}
+
+    {#    <div id="myModal" class="modal">#}
+    {#        <div class="modal-content">#}
+    {#            <span class="close">&times;</span>#}
+    {#            <h2>Выберите адрес на карте:</h2>#}
+    {#            <input type="text" id="search" placeholder="Введите или выберите адрес">#}
+    {#            <div id="map" class="map"></div>#}
+    {#        </div>#}
+    {#    </div>#}
+</header>
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+{#    <footer class="footer">#}
+{#        <div class="footer__addr">#}
+{#            <h1 class="footer__logo">Логотипчик</h1>#}
+{#            <h2>Контакты</h2>#}
+{#            <address>#}
+{#                Какой-та адрес<br>#}
+{#                <a class="footer__btn" href="mailto:example@gmail.com">Наша электронная почта</a>#}
+{#            </address>#}
+{#        </div>#}
+{##}
+{#        <ul class="footer__nav">#}
+{#            <li class="nav__item">#}
+{#                <h2 class="nav__title">Популярные категории</h2>#}
+{##}
+{#                <ul class="nav__ul">#}
+{#                    <li>#}
+{#                        <a href="#">Полуфабрикаты</a>#}
+{#                    </li>#}
+{##}
+{#                    <li>#}
+{#                        <a href="#">Кондитерские изделия</a>#}
+{#                    </li>#}
+{##}
+{#                    <li>#}
+{#                        <a href="#">Эчпочмаки</a>#}
+{#                    </li>#}
+{#                </ul>#}
+{#            </li>#}
+{##}
+{#            <li class="nav__item nav__item--extra">#}
+{#                <h2 class="nav__title">Полезные ссылки</h2>#}
+{##}
+{#                <ul class="nav__ul nav__ul--extra">#}
+{#                    <li>#}
+{#                        <a href="#">Главная</a>#}
+{#                    </li>#}
+{##}
+{#                    <li>#}
+{#                        <a href="#">Каталог услуг</a>#}
+{#                    </li>#}
+{##}
+{#                    <li>#}
+{#                        <a href="#">Специалисты</a>#}
+{#                    </li>#}
+{##}
+{#                    <li>#}
+{#                        <a href="#">Еще</a>#}
+{#                    </li>#}
+{##}
+{#                    <li>#}
+{#                        <a href="#">Еще</a>#}
+{#                    </li>#}
+{##}
+{#                    <li>#}
+{#                        <a href="#">Еще</a>#}
+{#                    </li>#}
+{#                </ul>#}
+{#            </li>#}
+{##}
+{#            <li class="nav__item">#}
+{##}
+{#                <ul class="nav__ul">#}
+{#                    <li>#}
+{#                        <a href="#">Политика конфиденциальности</a>#}
+{#                    </li>#}
+{##}
+{#                    <li>#}
+{#                        <a href="#">Условия использования</a>#}
+{#                    </li>#}
+{#                </ul>#}
+{#            </li>#}
+{#        </ul>#}
+{##}
+{#        <div class="legal">#}
+{#            <p>© 2024 Все права защищены.</p>#}
+{#        </div>#}
+{#    </footer>#}
+<script src="{% static 'js/script.js' %}"></script>
+<script src="https://api-maps.yandex.ru/2.1/?apikey=e2cba001-8644-4665-849e-5746d3a74eb9&lang=ru_RU"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="registration">
+        <div class="logcontainer">
+            <input type="checkbox" id="check">
+            <div class="login form">
+                <header>Регистрация услуги</header>
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div>
+                        <label for="{{ form.organization_name.id_for_label }}">Наименование бренда:</label>
+                        {{ form.organization_name }}
+                        {% for error in form.organization_name.errors %}
+                            <span class="errorlist">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.inn.id_for_label }}">ИНН:</label>
+                        {{ form.inn }}
+                        {% for error in form.inn.errors %}
+                            <span class="errorlist">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.email.id_for_label }}">Почта:</label>
+                        {{ form.email }}
+                        {% for error in form.email.errors %}
+                            <span class="errorlist">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.username.id_for_label }}">Логин:</label>
+                        {{ form.username }}
+                        {% for error in form.username.errors %}
+                            <span class="errorlist">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.password.id_for_label }}">Пароль:</label>
+                        {{ form.password }}
+                        {% for error in form.password.errors %}
+                            <span class="errorlist">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <div>
+                        <label for="{{ form.password_confirmation.id_for_label }}">Подтверждение пароля:</label>
+                        {{ form.password_confirmation }}
+                        {% for error in form.password_confirmation.errors %}
+                            <span class="errorlist">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <button type="submit">Зарегистрироваться</button>
+                </form>
+
+                <div class="signup">
+                  <span class="регистрация">Есть учетная запись?
+                 <a href="{% url 'account:company_login' %}">Войти </a>
+                </span>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

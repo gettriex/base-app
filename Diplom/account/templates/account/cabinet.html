@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <section class="cabinet">
+        <div class="block">
+            <div class="col left">
+                <img src="{% static 'img/sel1.jpg' %}" class="prof">
+                <a href="#" class="load">Загрузить фото</a>
+            </div>
+            <div class="col right">
+                <div class="justform">
+                    <form action="#">
+                        <div class="stroke">
+                            <input type="text" placeholder="Фамилия">
+                            <input type="text" placeholder="Имя">
+                        </div>
+                        <div class="stroke">
+                            <input type="text" placeholder="Отчество">
+                            <input type="text" placeholder="Адрес электронной почты">
+                        </div>
+                        <div class="stroke">
+                            <input type="text" placeholder="Номер телефона">
+                            <input type="text" placeholder="Адрес">
+                        </div>
+                    </form>
+                </div>
+                <a href="#" class="save">Сохранить</a>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </section>
+<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+{% endblock %}
