@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <div class="registration">
+        <div class="logcontainer">
+            <input type="checkbox" id="check">
+            <div class="login form">
+                <header>Авторизация пользователя</header>
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="text" value="{{ next }}"/>
+                    <div class="form-error">{{ form.non_field_errors }}</div>
+                    {% for f in form %}
+                    <p><label for="form-label" for="{{ f.id_for_label }}">{{ f.label }}</label>{{ f }}</p>
+                    <div class="form-error">{{ f.errors }}</div>
+                    {% endfor %}
+                    <p><button class="button" type="submit">Войти</button></p>
+                </form>
+                <div class="signup">
+                  <span class="регистрация">Нет учетной записи?
+                     <a href="{% url 'account:registration' %}">Регистрация</a>
+                  </span>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

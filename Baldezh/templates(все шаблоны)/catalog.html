@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Каталог{% endblock %}
+{% block content %}
+    <section class="catalog-container">
+        <ul class="select-menu">
+            <li><a class="" href="{% url "catalog:index" %}">Все категории</a></li>
+            {% for category in categories %}
+                <li><a class="" href="{% url "catalog:category" category.slug %}">{{ category.name }}</a></li>
+            {% endfor %}
+        </ul>
+    <div class="catalog1">
+    <h2 class="Name-catalog">Каталог услуг</h2>
+        <div class="catalog">
+            <a href="{% url 'company' %}">
+            {% for datum in posts %}
+                <div class="catalog-item">
+                    <div class="catalog-fotos">
+                        <img class="cover" src="{{ datum.photo.url }}" alt="{{ datum.photo.name }}">
+                        <p class="rating"> {{ datum.rating }}</p>
+                    </div>
+                    <div class="catalog-content">
+                        <p class="name">{{ datum.name }}</p>
+                        <p class="truncate">{{ datum.description }}</p>
+                        <ul>
+                            <li class="price">Цена от: {{ datum.price }}</li>
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+            </a>
+        </div>
+    </div>
+    </section>
+{% endblock %}
+{% block footer %}
+{% endblock %}

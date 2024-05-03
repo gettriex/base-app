@@ -46,6 +46,13 @@ class Service(models.Model):
         else:
             return 0
 
+    def count_rating(self):
+        reviews = self.reviews.all()
+        if reviews:
+            return len(reviews)
+        else:
+            return 0
+
     def get_absolute_url(self):
         return reverse('category', kwards={'cat_slug': self.slug})
 

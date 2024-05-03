@@ -6,6 +6,7 @@ from django.db import models
 class User(AbstractUser):
     photo = models.ImageField(upload_to='users/%Y/%m/%d/', default=None, blank=True, null=True,
                               verbose_name='Фотография')
+    telephone = models.CharField(max_length=11, default=None, blank=True, null=True,)
 
     class Meta:
         verbose_name = 'Пользователь'

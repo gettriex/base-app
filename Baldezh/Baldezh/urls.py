@@ -23,7 +23,7 @@ from Baldezh import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
-    path('catalog/', include('catalog.urls')),
+    path('catalog/', include('catalog.urls', namespace='catalog')),
     path('account/', include('account.urls', namespace='account')),
 ]
 
