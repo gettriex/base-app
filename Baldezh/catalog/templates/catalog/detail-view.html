@@ -106,9 +106,12 @@
                         <div class="bar"></div>
                     </div>
                 </div>
+                {% for review in object.reviews.all %}
 
-                {% for review in reviews %}
                     <div style="border: 1px black solid">
+                        {% if user.is_superuser or user.is_staff or review.user == user %}
+                            <a href="{% url 'catalog:delete_review' object.slug review.pk %}">Удалить</a>
+                        {% endif %}
                         <p>{{ review.user.username }}</p>
                         <p>{{ review.rating }}/5</p>
                         <p>{{ review.comment }}</p>
@@ -120,40 +123,30 @@
         <div class="row">
             <div class="single-form-left">
                 <!-- contact form grid -->
-                <div class="contact-single">
-                    <h3 class="editContent" style="outline: none; cursor: inherit;">
+                {% if user.is_authenticated %}
+                    {% if not user_has_review %}
+                        <div class="contact-single">
+                            <h3 class="editContent" style="outline: none; cursor: inherit;">
                                     <span class="sub-tittle editContent"
-                                          style="outline: none; cursor: inherit;">02</span>Оставить
-                        отзыв</h3>
-                    <form action="" method="post" class="mt-4">
-                        {% csrf_token %}
-                        <div class="form-group editContent">
-                            <label for="contactcomment" class="editContent">
-                                Ваш комментарий *
-                            </label>
+                                          style="outline: none; cursor: inherit;"></span>Оставить
+                                отзыв</h3>
+                            <form method="post" class="mt-4">
+                                {% csrf_token %}
+                                {% for f in reviews_form %}
+                                    <div class="input-field">
+                                        <label hidden="hidden" for="{{ f.id_for_label }}">{{ f.label }}</label>
+                                        {{ f }}
+                                        <div class="input-errors">{{ f.errors }}</div>
+                                    </div>
+                                {% endfor %}
+                                <button type="submit"
+                                        class="mt-3 btn btn-success btn-block py-3">
+                                    Отправить
+                                </button>
+                            </form>
                         </div>
-                        <div class="d-sm-flex">
-                            <div class="col-sm-6 form-group p-0 editContent">
-                                <label for="contactusername" class="editContent">
-                                    Имя *
-                                </label>
-                                <input type="text" class="form-control border" name="name"
-                                       id="contactusername" required="">
-                            </div>
-                            <div class="col-sm-6 form-group ml-sm-3 editContent">
-                                <label for="contactemail" class="editContent">
-                                    Email *
-                                </label>
-                                <input type="email" class="form-control border" name="email"
-                                       id="contactemail" required="">
-                            </div>
-                        </div>
-                        <button type="submit"
-                                class="mt-3 btn btn-success btn-block py-3">
-                            Отправить
-                        </button>
-                    </form>
-                </div>
+                    {% endif %}
+                {% endif %}
                 <!--  //contact form grid ends here -->
             </div>
         </div>

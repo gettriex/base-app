@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Добавление услуги{% endblock %}
+{% block content %}
+    <div class="New-service">
+        <div class="New-service-content">
+            <h1>Добавление новой услуги</h1>
+            <form method="post" enctype="multipart/form-data" class="add-service">
+                {% csrf_token %}
+                {% for f in form %}
+                    <div class="input-field">
+                        <label for="{{ f.id_for_label }}">{{ f.label }}</label>
+                        {{ f }}
+                        <div class="input-errors">{{ f.errors }}</div>
+                    </div>
+                {% endfor %}
+                <button type="submit">Сохранить</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
