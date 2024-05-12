@@ -24,7 +24,7 @@ class CustomUserCreationForm(UserCreationForm):
 
     class Meta:
         model = get_user_model()
-        fields = ['username', 'password1', 'password2', 'email', ]
+        fields = ['username', 'password1', 'password2', 'email', 'first_name', 'last_name', 'patronymic']
         labels = {
             'email': 'E-mail',
         }
@@ -37,6 +37,24 @@ class CustomUserCreationForm(UserCreationForm):
         if get_user_model().objects.filter(email=email).exists():
             raise forms.ValidationError("Такой E-mail уже существует!")
         return email
+
+
+class UserEditForm(forms.ModelForm):
+    username = forms.CharField(disabled=True, label='Эл.Почта', widget=forms.TextInput(attrs={'class': 'form-input'}))
+    email = forms.CharField(disabled=True, label='Эл.Почта', widget=forms.TextInput(attrs={'class': 'form-input'}))
+    photo = forms.FileField(label='Эл.Почта', widget=forms.FileInput(attrs={'class': 'form-input',
+                                                                            'accept': "image/*"}))
+
+    class Meta:
+        model = get_user_model()
+
+        fields = ['first_name', 'last_name', 'patronymic', 'username', 'email', 'telephone', 'photo', 'description']
+        labels = {
+            'email': 'E-mail',
+        }
+        widgets = {
+            'email': forms.TextInput(attrs={'class': 'input-control', 'placeholder': 'E-mail'}),
+        }
 
 
 class CustomUserChangeForm(UserChangeForm):

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Редактирование{% endblock %}
+
+{% block content %}
+    <div class="container-cabinet">
+        <h2>Личный кабинет</h2>
+        <form method="POST" enctype="multipart/form-data" class="edit-form">
+            {% csrf_token %}
+
+            <div class="form-error">{{ form.non_field_errors }}</div>
+
+            {% for f in form %}
+                <div class="form-group">
+                    <label class="hidden" for="{{ f.id_for_label }}">{{ f.label }}: </label>{{ f }}
+                    <div class="form-error">{{ f.errors }}</div>
+                </div>
+            {% endfor %}
+            <button class="button">Сохранить</button>
+
+        </form>
+    </div>
+{% endblock %}
