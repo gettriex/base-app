@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+
+{% block title %}Профиль{% endblock %}
+{% block content %}
+    <a href="{% url 'account:edit' %}">Личный кабинет</a>
+    <section class="container">
+        <div class="seller_card">
+            <div class="seller_card_logo">
+                <a href="#"><img src="{% if user.photo %}{{ user.photo.url }}{% endif %}" alt="Фото профиля"></a>
+                <div class="seller_card_info">
+                    <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+                    <span>Набережные челны</span>
+                    <div class="seller_card_button">
+                        <a href="#">Телефон</a>
+                        <a href="#">Если получится то будет чат</a>
+                    </div>
+                </div>
+            </div>
+            <div class="seller_card_description">
+                <p>{{ user.description }}</p>
+            </div>
+            <div class="seller_card_schedule">
+                <span><b>Удобное время для связи</span>
+                <span class="time">c 7:00-22:00</span>
+            </div>
+            <div class="gallery">
+                {% for service in services %}
+                    <img src="{% if user.photo %}{{ service.photo.url }}{% endif %}" class="gallery-img" alt="работа">
+                {% endfor %}
+            </div>
+            <div id="modal" class="modal">
+                <span class="close">&times;</span>
+                <img class="modal-content" id="modal-image">
+                <div id="caption"></div>
+                <a class="prev">&#10094;</a>
+                <a class="next">&#10095;</a>
+            </div>
+    </section>
+    <section class="container">
+        <div class="slider">
+            <h1>Примеры работ</h1>
+            <div class="slide active" style="display: flex;">
+                {% for service in services %}
+                    <div class="service">
+                        <img src="{% if user.photo %}{{ service.photo.url }}{% endif %}" alt="Услуга 1">
+                        <p>{{ service.description }}</p>
+                        <p>{{ service.price }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <!-- Слайд 2 -->
+            <div class="slide">
+                {% for service in services %}
+                    <div class="service">
+                        <img src="{% if user.photo %}{{ service.photo.url }}{% endif %}" alt="Услуга 1">
+                        <p>{{ service.description }}</p>
+                        <p>{{ service.price }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <a class="prev prev-service">&#10094;</a>
+            <a class="next next-service">&#10095;</a>
+        </div>
+    </section>
+    <section class="container">
+        <div class="container-border">
+            <div class="arrow-icon" onclick="toggleInfo()">
+                <h2>Приготовление синабонов</h2>
+                <p class="down-arrow"></p>
+            </div>
+            <div class="info">
+                <div class="info-content">
+                    <ul>
+                        <li>Опыт работы</li>
+                        <li>Дни работы</li>
+                        <li>Доставка</li>
+                        <li>Время работы</li>
+                    </ul>
+                    <ul>
+                        <li>10 лет</li>
+                        <li>любой день недели</li>
+                        <li>Да</li>
+                        <li>c 7:00-22:00</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="container">
+        <div class="container-border">
+            <div class="arrow-icon" onclick="toggleInfo()">
+                <h2>Приготовление пирожоных</h2>
+                <p class="down-arrow"></p>
+            </div>
+            <div class="info">
+                <div class="info-content">
+                    <ul>
+                        <li>Опыт работы</li>
+                        <li>Дни работы</li>
+                        <li>Доставка</li>
+                        <li>Время работы</li>
+                    </ul>
+                    <ul>
+                        <li>10 лет</li>
+                        <li>любой день недели</li>
+                        <li>Да</li>
+                        <li>c 7:00-22:00</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="container">
+        <div class="container-border">
+            <div class="arrow-icon" onclick="toggleInfo()">
+                <h2>Приготовление шоколадных тортов</h2>
+                <p class="down-arrow"></p>
+            </div>
+            <div class="info">
+                <div class="info-content">
+                    <ul>
+                        <li>Опыт работы</li>
+                        <li>Дни работы</li>
+                        <li>Доставка</li>
+                        <li>Время работы</li>
+                    </ul>
+                    <ul>
+                        <li>10 лет</li>
+                        <li>любой день недели</li>
+                        <li>Да</li>
+                        <li>c 7:00-22:00</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="container">
+        <div class="container-border">
+            <div class="arrow-icon" onclick="toggleInfo()">
+                <h2>Блок с отзывами</h2>
+                <p class="down-arrow"></p>
+            </div>
+            <div class="info">
+                <div class="info-content">
+                    <ul>
+                        <li>Опыт работы</li>
+                        <li>Дни работы</li>
+                        <li>Доставка</li>
+                        <li>Время работы</li>
+                    </ul>
+                    <ul>
+                        <li>10 лет</li>
+                        <li>любой день недели</li>
+                        <li>Да</li>
+                        <li>c 7:00-22:00</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="container">
+        <div class="container-border">
+            <div class="arrow-icon" onclick="toggleInfo()">
+                <h2>Если получится похожие или остальные объявления чтобы сюда делало</h2>
+                <p class="down-arrow"></p>
+            </div>
+            <div class="info">
+                <div class="info-content">
+                    <ul>
+                        <li>Опыт работы</li>
+                        <li>Дни работы</li>
+                        <li>Доставка</li>
+                        <li>Время работы</li>
+                    </ul>
+                    <ul>
+                        <li>10 лет</li>
+                        <li>любой день недели</li>
+                        <li>Да</li>
+                        <li>c 7:00-22:00</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+
+
