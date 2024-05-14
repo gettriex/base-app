@@ -311,12 +311,20 @@ label {
     font-weight: bold;
 }
 
+.registration_form{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
 input[type="text"],
 input[type="email"],
 input[type="tel"],
 input[type="file"],
+input[type='password'],
 textarea,
 button {
+
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -415,6 +423,7 @@ dialog{
 
 .registration-form{
   width: 100%;
+
 }
 .form-error li{
   padding-bottom: 10px;
@@ -972,7 +981,7 @@ a{
   height: 400px;
 }
 
-.cat1, .cat2, .cat3, .cat4, .cat5, .cat6, .cat7, .cat8, .cat9, .cat10{
+.cat{
   background-color: white;
   background-repeat: no-repeat;
   height: 200px;
@@ -1016,63 +1025,6 @@ a{
 }
 h2{
   margin-top: 2%;
-}
-.cat1 { grid-area: h; }
-.cat2 { grid-area: a1; }
-.cat3 { grid-area: a2; }
-.cat4 { grid-area: a3; }
-.cat5 { grid-area: f; }
-.cat6 { grid-area: f1; }
-.cat7 { grid-area: f2; }
-.cat8 { grid-area: f3; }
-.cat9 { grid-area: f4; }
-.cat10 { grid-area: f5; }
-
-.cat1{
-  background-image: url(../img/pelmeni1.png);
-  background-size: 50%;
-  background-position: bottom -10px right -10px;
-  margin-left: 65px;
-  margin-right: 10px;
-}
-.cat2{
-  background-image: url(../img/123.png);
-  background-size: 50%;
-}
-.cat3{
-  background-image: url(../img/borsch1.png);
-  background-size: 50%;
-}
-.cat4{
-  background-image: url(../img/ovoshi1.png);
-  background-size: 60%;
-}
-.cat5{
-  background-image: url(../img/cheese.png);
-  background-size: 75%;
-}
-.cat6{
-  background-image: url(../img/3072x2056_706757.jpg);
-  background-size: 50%;
-  background-position: bottom -10px right -10px;
-  margin-left: 65px;
-  margin-right: 10px;
-}
-.cat7{
-  background-image: url(../img/E0o0gIGXMAYM86G.png);
-  background-size: 50%;
-}
-.cat8{
-  background-image: url(../img/../img/ovoshi1.png);
-  background-size: 50%;
-}
-.cat9{
-  background-image: url(../img/free-png.ru-419.png);
-  background-size: 60%;
-}
-.cat10{
-  background-image: url(../img/20130306202647.jpg);
-  background-size: 75%;
 }
 .catxt{
   font-weight: bold;

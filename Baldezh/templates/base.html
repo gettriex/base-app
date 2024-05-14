@@ -22,8 +22,7 @@
                             {% if user.is_superuser or user.is_staff %}
                                 <a href="/admin/">Админ-панель</a>
                             {% else %}
-                                {{ user.username }}
-
+                                <a href="{% url 'account:profile' %}">{{ user.username }}</a>
                             {% endif %}
                             <form method="POST" action="{% url "account:logout" %}">{% csrf_token %}
                                 <button type="submit">Выйти</button>

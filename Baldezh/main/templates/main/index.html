@@ -10,42 +10,15 @@
             </form>
         </div>
         <div class="wrapper2">
-            <a href="">
-                <div class="cat3"><p class="catxt">Домашняя еда</p></div>
-            </a>
-            <a href="">
-                <div class="cat4"><p class="catxt">Овощи</p></div>
-            </a>
-            <a href="">
-                <div class="cat5"><p class="catxt">Молочные продукты</p></div>
-            </a>
-        </div>
-        <div class="wrapper">
-            <a href="">
-                <div class="cat1"><p class="catxt">Замороженные блюда</p></div>
-            </a>
-            <a href="">
-                <div class="cat2"><p class="catxt">Выпечка</p></div>
-            </a>
-        </div>
-        <div class="wrapper3">
-            <a href="">
-                <div class="cat8"><p class="catxt">Правильное питание</p></div>
-            </a>
-            <a href="">
-                <div class="cat9"><p class="catxt">Мясные изделия</p></div>
-            </a>
-            <a href="">
-                <div class="cat10"><p class="catxt">Морепродукты</p></div>
-            </a>
-        </div>
-        <div class="wrapper4">
-            <a href="">
-                <div class="cat6"><p class="catxt">Готовые блюда</p></div>
-            </a>
-            <a href="">
-                <div class="cat7"><p class="catxt">Азиатская кухня</p></div>
-            </a>
+            {% for category in categories %}
+                <a href="{% url 'catalog:category' category.slug %}">
+                    <div class="cat">
+                        <p class="catxt">{{ category.name }}</p>
+                        <img width="100" height="100" src="{{ category.photo.url }}" alt="category">
+                    </div>
+                </a>
+            {% endfor %}
+
         </div>
     </div>
     <h2>Топ специалистов</h2>

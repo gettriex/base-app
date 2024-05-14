@@ -17,13 +17,13 @@ class LoginUser(LoginView):
 
 class UserCreation(CreateView):
     form_class = CustomUserCreationForm
-    template_name = 'account/authorization.html'
+    template_name = 'account/registration.html'
     context_object_name = 'registration'
     success_url = reverse_lazy('account:login')
 
 
 class UserProfile(TemplateView):
-    template_name = 'account/index.html'
+    template_name = 'account/profile.html'
 
     def get_success_url(self):
         return reverse_lazy('account:profile', args=[self.request.user.id])

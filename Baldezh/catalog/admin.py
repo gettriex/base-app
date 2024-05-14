@@ -8,7 +8,7 @@ from catalog.utils import confirm, deny
 # Register your models here.
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    fields = ('name', 'slug')
+    fields = ('name', 'slug', 'photo')
     prepopulated_fields = {'slug': ('name',)}
 
 

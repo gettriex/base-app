@@ -8,6 +8,7 @@ class Category(models.Model):
     name = models.CharField("Название категории", max_length=100, unique=True, )
     # slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL", blank=True, null=True)
     slug = models.SlugField(max_length=80, unique=True, null=True, db_index=True, verbose_name="URL")
+    photo = models.ImageField(upload_to="category/", null=True, blank=True, default='category/default.jpg')
 
     class Meta:
         db_table = 'category'
@@ -70,6 +71,9 @@ class Service(models.Model):
             return len(reviews)
         else:
             return 0
+
+    def get_price(self):
+        return f'{round(self.price)}'
 
     def get_absolute_url(self):
         return reverse('category', kwards={'cat_slug': self.slug})
