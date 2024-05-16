@@ -11,14 +11,14 @@
         </ul>
         <div class="catalog1">
             <h2 class="Name-catalog">Каталог услуг</h2>
-            <form method="GET" action="{% url 'catalog:index' %}">
-                <input type="text" name="q" placeholder="Поиск...">
-                <input type="number" name="min_price" placeholder="Мин. цена">
-                <input type="number" name="max_price" placeholder="Макс. цена">
-                <input type="radio" name="sort_by_price" value="ascending" checked id="sort_by_price1"><label for="sort_by_price1">Сортировка по возрастанию</label>
-                <input type="radio" name="sort_by_price" value="descending" id="sort_by_price2"><label for="sort_by_price2">Сортировка по убыванию</label>
-                <button type="submit">Применить</button>
-            </form>
+{#            <form method="GET" action="{% url 'catalog:index' %}">#}
+{#                <input type="text" name="q" placeholder="Поиск...">#}
+{#                <input type="number" name="min_price" placeholder="Мин. цена">#}
+{#                <input type="number" name="max_price" placeholder="Макс. цена">#}
+{#                <input type="radio" name="sort_by_price" value="ascending" checked id="sort_by_price1"><label for="sort_by_price1">Сортировка по возрастанию</label>#}
+{#                <input type="radio" name="sort_by_price" value="descending" id="sort_by_price2"><label for="sort_by_price2">Сортировка по убыванию</label>#}
+{#                <button type="submit">Применить</button>#}
+{#            </form>#}
             <div class="catalog">
 
                 {% for datum in posts %}
