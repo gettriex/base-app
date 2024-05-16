@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <main>
+        <a href="cabinet.html">Личный каюинет</a>
+        <section class="container">
+            <div class="seller_card">
+                <div class="seller_card_logo">
+                    <a href="#"><img src="img/photo_2022-09-01_22-55-05.jpg" alt="Логотип"></a>
+                    <div class="seller_card_info">
+                        <h2>Кажерыжка</h2>
+                        <span>Набережные челны</span>
+                        <div class="seller_card_button">
+                            <a href="#">Телефон</a>
+                            <a href="#">Если получится то будет чат</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="seller_card_description">
+                    <p>Работаем для Вас с 2009 года.
+                        Звоните. Пишите. Обсудим любые ваши задачи - найдём решение.
+                        Мы гарантируем Вам - Быстрое исполнение. Аккуратность. Пунктуальность. Порядочность.</p>
+                </div>
+                <div class="seller_card_schedule">
+                    <span><b>Удобное время для связи</span>
+                    <span class="time">c 7:00-22:00</span>
+                </div>
+                <div class="gallery">
+                    <img src="img/0bce91d5d26880c291e054cff2c5473f.jpg" class="gallery-img" alt="">
+                    <img src="img/2f8fb721a7a803551da139e7aee5df7b.jpg" class="gallery-img" alt="">
+                    <img src="img/photo_2022-09-01_22-55-05.jpg" class="gallery-img" alt="">
+                </div>
+                <div id="modal" class="modal">
+                    <span class="close">&times;</span>
+                    <img class="modal-content" id="modal-image">
+                    <div id="caption"></div>
+                    <a class="prev">&#10094;</a>
+                    <a class="next">&#10095;</a>
+                </div>
+        </section>
+        <section class="container">
+            <div class="slider">
+                <h1>Примеры работ</h1>
+                <div class="slide active" style="display: flex;">
+                    <div class="service">
+                        <img src="img/0bce91d5d26880c291e054cff2c5473f.jpg" alt="Услуга 1">
+                        <p>Описание услуги 1</p>
+                        <p>Стоимость</p>
+                    </div>
+                    <div class="service">
+                        <img src="img/2f8fb721a7a803551da139e7aee5df7b.jpg" alt="Услуга 2">
+                        <p>Описание услуги 2</p>
+                        <p>Стоимость</p>
+                    </div>
+                    <div class="service">
+                        <img src="img/photo_2022-09-01_22-55-05.jpg" alt="Услуга 3">
+                        <p>Описание услуги 3</p>
+                        <p>Стоимость</p>
+                    </div>
+                </div>
+                <!-- Слайд 2 -->
+                <div class="slide">
+                    <div class="service">
+                        <img src="img/photo_2022-09-01_22-55-05.jpg" alt="Услуга 4">
+                        <p>Описание услуги 4</p>
+                        <p>Стоимость</p>
+                    </div>
+                    <div class="service">
+                        <img src="img/2f8fb721a7a803551da139e7aee5df7b.jpg" alt="Услуга 5">
+                        <p>Описание услуги 5</p>
+                        <p>Стоимость</p>
+                    </div>
+                    <div class="service">
+                        <img src="img/0bce91d5d26880c291e054cff2c5473f.jpg" alt="Услуга 6">
+                        <p>Описание услуги 6</p>
+                        <p>Стоимость</p>
+                    </div>
+                </div>
+                <a class="prev prev-service">&#10094;</a>
+                <a class="next next-service">&#10095;</a>
+            </div>
+        </section>
+        <section class="container">
+            <div class="container-border">
+                <div class="arrow-icon" onclick="toggleInfo()">
+                    <h2>Приготовление синабонов</h2>
+                    <p class="down-arrow"></p>
+                </div>
+                <div class="info">
+                    <div class="info-content">
+                        <ul>
+                            <li>Опыт работы</li>
+                            <li>Дни работы</li>
+                            <li>Доставка</li>
+                            <li>Время работы</li>
+                        </ul>
+                        <ul>
+                            <li>10 лет</li>
+                            <li>любой день недели</li>
+                            <li>Да</li>
+                            <li>c 7:00-22:00</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="container">
+            <div class="container-border">
+                <div class="arrow-icon" onclick="toggleInfo()">
+                    <h2>Приготовление пирожоных</h2>
+                    <p class="down-arrow"></p>
+                </div>
+                <div class="info">
+                    <div class="info-content">
+                        <ul>
+                            <li>Опыт работы</li>
+                            <li>Дни работы</li>
+                            <li>Доставка</li>
+                            <li>Время работы</li>
+                        </ul>
+                        <ul>
+                            <li>10 лет</li>
+                            <li>любой день недели</li>
+                            <li>Да</li>
+                            <li>c 7:00-22:00</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="container">
+            <div class="container-border">
+                <div class="arrow-icon" onclick="toggleInfo()">
+                    <h2>Приготовление шоколадных тортов</h2>
+                    <p class="down-arrow"></p>
+                </div>
+                <div class="info">
+                    <div class="info-content">
+                        <ul>
+                            <li>Опыт работы</li>
+                            <li>Дни работы</li>
+                            <li>Доставка</li>
+                            <li>Время работы</li>
+                        </ul>
+                        <ul>
+                            <li>10 лет</li>
+                            <li>любой день недели</li>
+                            <li>Да</li>
+                            <li>c 7:00-22:00</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="container">
+            <div class="container-border">
+                <div class="arrow-icon" onclick="toggleInfo()">
+                    <h2>Блок с отзывами</h2>
+                    <p class="down-arrow"></p>
+                </div>
+                <div class="info">
+                    <div class="info-content">
+                        <ul>
+                            <li>Опыт работы</li>
+                            <li>Дни работы</li>
+                            <li>Доставка</li>
+                            <li>Время работы</li>
+                        </ul>
+                        <ul>
+                            <li>10 лет</li>
+                            <li>любой день недели</li>
+                            <li>Да</li>
+                            <li>c 7:00-22:00</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="container">
+            <div class="container-border">
+                <div class="arrow-icon" onclick="toggleInfo()">
+                    <h2>Если получится похожие или остальные объявления чтобы сюда делало</h2>
+                    <p class="down-arrow"></p>
+                </div>
+                <div class="info">
+                    <div class="info-content">
+                        <ul>
+                            <li>Опыт работы</li>
+                            <li>Дни работы</li>
+                            <li>Доставка</li>
+                            <li>Время работы</li>
+                        </ul>
+                        <ul>
+                            <li>10 лет</li>
+                            <li>любой день недели</li>
+                            <li>Да</li>
+                            <li>c 7:00-22:00</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="js/scripts.js"></script>
+</body>
+
+</html>
