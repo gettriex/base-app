@@ -31,9 +31,11 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'account.apps.AccountConfig',
     'main.apps.MainConfig',
     'catalog.apps.CatalogConfig',
+    'chat.apps.ChatConfig',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -156,3 +159,10 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
 
+ASGI_APPLICATION = "Baldezh.asgi.application"
+
+CHANNEL_LAYERS = {
+    "default": {"BACKEND": "channels.layers.InMemoryChannelLayer"},
+}
+
+CORS_ALLOW_ALL_ORIGINS = True

@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.html import format_html
 
-from catalog.models import Service, Category, Reviews
+from catalog.models import Service, Category, Reviews, Provider
 from catalog.utils import confirm, deny
 
 
@@ -12,40 +12,40 @@ class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 
-@admin.register(Service)
-class ServiceAdmin(admin.ModelAdmin):
-    list_display = ('thumbnail',
-                    'name',
-                    'slug',
-                    'price',
-                    'creator',
-                    'phone',
-                    'email',
-                    'average_rating',
-                    'status',
-                    'created_at',
-                    'updated_at')
-    fields = (
-        'creator',
-        'name',
+@admin.register(Provider)
+class ProviderAdmin(admin.ModelAdmin):
+    list_display = (
+        'thumbnail',
+        'user',
         'slug',
+        'address',
+        'description',
+        'average_rating',
+        'count_rating',
+        'status',
+        'upper_in_top',
+        'created_at',
+        'updated_at'
+    )
+    fields = (
+        'user',
+        'slug',
+        'address',
         'category',
         'description',
-        'price',
-        'photo',
-        'phone',
-        'email'
+        'status',
+        'upper_in_top',
     )
-    prepopulated_fields = {'slug': ('name',)}
-    ordering = ('-status', '-updated_at', '-created_at', 'name',)
-    list_display_links = ('thumbnail', 'name')
-    search_fields = ('name',)
+    # prepopulated_fields = {'slug': ('name',)}
+    ordering = ('-status', '-updated_at', '-created_at', 'user',)
+    list_display_links = ('thumbnail', 'user')
+    search_fields = ('providers_name',)
     list_editable = ('status',)
-    list_filter = ('status', 'created_at', 'updated_at',)
+    list_filter = ('status', 'created_at', 'updated_at', 'upper_in_top',)
     actions = ('confirm_service', 'deny_service',)
 
     def thumbnail(self, obj):
-        return format_html('<img src="{}" style="max-height: 50px; max-width: 50px;" />'.format(obj.photo.url))
+        return format_html('<img src="{}" style="max-height: 50px; max-width: 50px;" />'.format(obj.user.photo.url))
 
     thumbnail.allow_tags = True
     thumbnail.short_description = 'Миниатюра'
@@ -69,6 +69,32 @@ class ServiceAdmin(admin.ModelAdmin):
             if response:
                 count += 1
         self.message_user(request, f'Успешно отклонены {count} объявлений')
+
+
+@admin.register(Service)
+class ServiceAdmin(admin.ModelAdmin):
+    list_display = (
+        'thumbnail',
+        'provider',
+        'name',
+        'price',
+        'extra',
+    )
+
+    fields = (
+        'provider',
+        'photo',
+        'name',
+        'price',
+        'extra',
+    )
+    list_display_links = ('thumbnail', 'provider')
+
+    def thumbnail(self, obj):
+        return format_html('<img src="{}" style="max-height: 50px; max-width: 50px;" />'.format(obj.photo.url))
+
+    thumbnail.allow_tags = True
+    thumbnail.short_description = 'Миниатюра'
 
 
 @admin.register(Reviews)

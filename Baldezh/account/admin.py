@@ -6,8 +6,8 @@ from django.utils.html import format_html
 # Register your models here.
 @admin.register(get_user_model())
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('thumbnail', 'username', 'email', 'first_name', 'last_name')
-    fields = ['photo', 'username', 'email', 'first_name', 'last_name', 'description']
+    list_display = ('thumbnail', 'username', 'email', 'fio', 'is_creator')
+    fields = ['photo', 'username', 'email', 'first_name', 'last_name', 'patronymic', 'description', 'is_creator']
     list_display_links = ['username', 'email', ]
     ordering = ['-date_joined']
 

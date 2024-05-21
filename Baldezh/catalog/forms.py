@@ -6,19 +6,12 @@ from catalog.models import Reviews, Service
 class CreateServiceForm(forms.ModelForm):
     class Meta:
         model = Service
-        fields = ('creator',
-                  'name',
-                  'category',
-                  'description',
-                  'price',
-                  'photo',
-                  'phone',
-                  'email',
-                  )
-
-        widgets = {
-            'creator': forms.HiddenInput()
-        }
+        fields = (
+            'photo',
+            'name',
+            'price',
+            'extra',
+        )
 
 
 class ReviewsForm(forms.ModelForm):

@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
+from slugify import slugify
 
 
 # Create your models here.
@@ -22,31 +23,28 @@ class Category(models.Model):
         return reverse('category', kwards={'cat_slug': self.slug})
 
 
-class Service(models.Model):
-    creator = models.ForeignKey(get_user_model(), models.CASCADE, verbose_name='Создатель поста',
-                                related_name='creator', null=True, blank=True)
-    name = models.CharField("Название объявления", max_length=100)
+class Provider(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name='Страница пользователя',
+                             related_name='provider', null=True, blank=True)
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL", null=True, blank=True)
+    address = models.CharField(max_length=255, verbose_name='Адрес местонахождения', null=True, blank=True)
     category = models.ManyToManyField(Category, blank=True, verbose_name="Категория")
     description = models.TextField("Описание")
-    price = models.DecimalField("Цена", max_digits=10, decimal_places=2)
-    photo = models.ImageField("Фото", upload_to='media/products')
-    phone = models.CharField("Телефон", max_length=15, null=True, blank=True)
-    email = models.EmailField("Почта", max_length=25)
-    status = models.CharField("Статус услуги", max_length=100, null=True, blank=True,
+    status = models.CharField("Статус страницы пользователя", max_length=100, null=True, blank=True,
                               choices=(("watching", "Рассмотрение"),
                                        ("accepted", "Принят"),
                                        ("denied", "Отклонён")),
                               default="watching")
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата отправки', blank=True, null=True)
-    updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления', blank=True, null=True)
+    upper_in_top = models.BooleanField(default=False, verbose_name="Выше в топе")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = "Объявление"
         verbose_name_plural = "Объявления"
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.user.fio}'
 
     def change_status_to_accepted(self):
         self.status = 'accepted'
@@ -72,16 +70,51 @@ class Service(models.Model):
         else:
             return 0
 
-    def get_price(self):
-        return f'{round(self.price)}'
+    def get_all_services(self):
+        services = self.services.all()
+        if services:
+            return services
+        else:
+            return 0
+
+    def get_all_categories(self):
+        categories = self.category.all()
+        if categories:
+            return categories
+        else:
+            return 0
 
     def get_absolute_url(self):
         return reverse('category', kwards={'cat_slug': self.slug})
 
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.user.username)
+
+        super().save(*args, **kwargs)
+
+
+class Service(models.Model):
+    provider = models.ForeignKey(Provider, models.CASCADE, verbose_name='Кто предоставляет услуги',
+                                 related_name='services', null=True, blank=True)
+    photo = models.ImageField("Фото услуги", upload_to='media/products')
+    name = models.CharField("Название услуги", max_length=100)
+    price = models.DecimalField("От какой цены услуга", max_digits=10, decimal_places=2)
+    extra = models.CharField(max_length=255, verbose_name='Дополнительно', null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Услуга"
+        verbose_name_plural = "Услуги"
+
+    def __str__(self):
+        return f'{self.name}'
+
+    def get_price(self):
+        return f'{round(self.price)}'
+
 
 class Reviews(models.Model):
     parent = models.ForeignKey(
-        'Service', on_delete=models.CASCADE, related_name='reviews', verbose_name="Родительский пост"
+        'Provider', on_delete=models.CASCADE, related_name='reviews', verbose_name="Родительский пост"
     )
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name="Пользователь")
     rating = models.IntegerField(choices=[(i, str(i)) for i in range(1, 6)])

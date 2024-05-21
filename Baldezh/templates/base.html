@@ -19,6 +19,9 @@
 
                     {% if user.is_authenticated %}
                         <li>
+                            {% if user.is_creator %}
+                                <a href="{% url 'chat:room' user.username user.username %}"></a>
+                            {% endif %} 
                             {% if user.is_superuser or user.is_staff %}
                                 <a href="/admin/">Админ-панель</a>
                             {% else %}
@@ -134,8 +137,11 @@
 {#        </div>#}
 {#    </footer>#}
 
-<a href="/">Я хочу предоставлять услуги</a>
+
 <script src="{% static 'js/scripts.js' %}"></script>
 <script src="https://api-maps.yandex.ru/2.1/?apikey=e2cba001-8644-4665-849e-5746d3a74eb9&lang=ru_RU"></script>
+
+{% block scriptblock %}
+{% endblock %}
 </body>
 </html>

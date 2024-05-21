@@ -5,18 +5,18 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, DeleteView, CreateView
 
 from catalog.forms import ReviewsForm, CreateServiceForm
-from catalog.models import Category, Service, Reviews
+from catalog.models import Category, Service, Reviews, Provider
 
 
 # Create your views here.
 class CatalogListView(ListView):
-    model = Service
+    model = Provider
     template_name = 'catalog/catalog.html'
     context_object_name = 'posts'
     paginate_by = 10
 
     def get_queryset(self):
-        queryset = Service.objects.filter(status='accepted').order_by('name', 'updated_at')
+        queryset = Provider.objects.filter(status='accepted').order_by('upper_in_top', 'user__username', 'updated_at')
 
         # Поиск по названию
         query = self.request.GET.get('q')
@@ -44,14 +44,14 @@ class CatalogListView(ListView):
 
 
 class ShowCategoryView(ListView):
-    model = Service
+    model = Provider
     template_name = 'catalog/catalog.html'
     context_object_name = 'posts'
     paginate_by = 10
 
     def get_queryset(self):
-        return Service.objects.filter(status='accepted',
-                                      category__slug=self.kwargs['cat_slug']).order_by('name',
+        return Provider.objects.filter(status='accepted',
+                                      category__slug=self.kwargs['cat_slug']).order_by('user',
                                                                                        'updated_at')
 
     def get_context_data(self, **kwargs):
@@ -61,8 +61,8 @@ class ShowCategoryView(ListView):
 
 
 class ShowDetailView(DetailView):
-    model = Service
-    template_name = 'catalog/detail-view.html'
+    model = Provider
+    template_name = 'catalog/detail-view1.html'
     slug_url_kwarg = 'service_slug'
 
     def get_context_data(self, **kwargs):

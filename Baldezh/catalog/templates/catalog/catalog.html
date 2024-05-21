@@ -15,28 +15,75 @@
                 <input type="text" name="q" placeholder="Поиск...">
                 <input type="number" name="min_price" placeholder="Мин. цена">
                 <input type="number" name="max_price" placeholder="Макс. цена">
-                <input type="radio" name="sort_by_price" value="ascending" checked id="sort_by_price1"><label for="sort_by_price1">Сортировка по возрастанию</label>
-                <input type="radio" name="sort_by_price" value="descending" id="sort_by_price2"><label for="sort_by_price2">Сортировка по убыванию</label>
+                <input type="radio" name="sort_by_price" value="ascending" checked id="sort_by_price1"><label
+                    for="sort_by_price1">Сортировка по возрастанию</label>
+                <input type="radio" name="sort_by_price" value="descending" id="sort_by_price2"><label
+                    for="sort_by_price2">Сортировка по убыванию</label>
                 <button type="submit">Применить</button>
             </form>
             <div class="catalog">
 
-                {% for datum in posts %}
-                    <a href="{% url 'catalog:detail' datum.slug %}">
-                        <div class="catalog-item">
-                            <div class="catalog-fotos">
-                                <img class="cover" src="{{ datum.photo.url }}" alt="{{ datum.photo.name }}">
-                                <p class="rating"> {{ datum.rating }}</p>
-                            </div>
-                            <div class="catalog-content">
-                                <p class="name">{{ datum.name }}</p>
-                                <p class="truncate">{{ datum.description }}</p>
-                                <ul>
-                                    <li class="price">Цена от: {{ datum.get_price }}р.</li>
-                                </ul>
+                {% for post in posts %}
+                    <div class="seller_card">
+                        <div class="seller_card_logo">
+                            <a href="{% url 'catalog:detail' post.slug %}"><img src="{{ post.user.photo.url }}"
+                                                                                alt="Логотип"></a>
+                            <div class="seller_card_info">
+                                <h2>{{ post.user.fio }}</h2>
+                                <div class="reviews-ob">
+                                    <div class="reviews-ozenka">
+                                        <img src="{% static 'img/icons8-star-48.png' %}" alt="Star">
+                                        <p>{{ post.average_rating }}</p>
+                                    </div>
+                                    <div class="reviews-reiting">
+                                        <img src="{% static 'img/icons8-message-50 (1).png' %}" alt="Star">
+                                        <p>{{ post.count_rating }}</p>
+                                    </div>
+                                </div>
+                                <span>{{ post.address }}</span>
+                                <div class="seller_card_description">
+                                    <p>{{ post.description }}</p>
+
+                                    {% if post.get_all_services %}
+                                        <div class="gallery2">
+
+                                            {% for service in post.get_all_services %}
+                                                <img src="{{ service.photo.url }}" class="gallery-img" alt="">
+                                            {% endfor %}
+
+                                        </div>
+                                        <div class="tags">
+                                            {% if post.get_all_categories %}
+                                                {% for product_category in post.get_all_categories %}
+                                                    <a href="{% url 'catalog:category' product_category.slug %}">{{ product_category }}</a>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </div>
+                                        <div class="services">
+                                            <ul>
+                                                {% for service in post.get_all_services %}
+                                                    <li><a href="#">{{ service.name }}<span
+                                                            class="price">от {{ service.get_price }}р за штуку</span></a>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    {% endif %}
+                                    <div class="seller_card_button">
+                                        <a href="#">Телефон</a>
+                                        <a href="{% url 'chat:room' post.slug user.username %}">Чат</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </a>
+                        <div id="modal" class="modal">
+                            <span class="close">&times;</span>
+                            <img class="modal-content" id="modal-image">
+                            <div id="caption"></div>
+                            <a class="prev">&#10094;</a>
+                            <a class="next">&#10095;</a>
+                        </div>
+                    </div>
                 {% endfor %}
             </div>
         </div>
