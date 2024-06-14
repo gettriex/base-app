@@ -1,0 +1,68 @@
+<div>
+    <input type="text" id="tag-input" name="{{ widget.name }}" value="{{ widget.value|stringformat:'s' }}" {{ widget.attrs|flatatt }}>
+    <ul id="suggestions" class="suggestions-list" style="display: none;"></ul>
+    <div id="selected-tags" class="selected-tags"></div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const tagInput = document.getElementById('tag-input');
+    const suggestions = document.getElementById('suggestions');
+    const selectedTags = document.getElementById('selected-tags');
+
+    tagInput.addEventListener('input', () => {
+        const inputValue = tagInput.value.toLowerCase();
+        suggestions.innerHTML = '';
+        if (inputValue) {
+            fetchCategories(inputValue);
+        } else {
+            suggestions.style.display = 'none';
+        }
+    });
+
+    function fetchCategories(query) {
+        fetch(`/catalog/get-categories/?query=${encodeURIComponent(query)}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(categories => {
+                suggestions.innerHTML = '';
+                categories.forEach(category => {
+                    const li = document.createElement('li');
+                    li.textContent = category.name;
+                    li.addEventListener('click', () => {
+                        addCategory(category.name);
+                        tagInput.value = '';
+                        suggestions.innerHTML = '';
+                    });
+                    suggestions.appendChild(li);
+                });
+                suggestions.style.display = 'block';
+            })
+            .catch(error => {
+                console.error('Error fetching categories:', error);
+            });
+    }
+
+    function addCategory(category) {
+        if (![...selectedTags.children].some(child => child.firstChild.textContent === category)) {
+            const tagElement = document.createElement('div');
+            tagElement.className = 'tag';
+            tagElement.innerHTML = `<span>${category}</span><button class="remove-tag">&times;</button>`;
+            tagElement.querySelector('.remove-tag').addEventListener('click', () => {
+                selectedTags.removeChild(tagElement);
+            });
+            selectedTags.appendChild(tagElement);
+        }
+    }
+
+    document.addEventListener('click', (e) => {
+        if (!tagInput.contains(e.target) && !suggestions.contains(e.target)) {
+            suggestions.style.display = 'none';
+        }
+    });
+});
+</script>

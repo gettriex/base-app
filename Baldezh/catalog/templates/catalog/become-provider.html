@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load custom_tags %}
+{% load static %}
+
+{% block title %}
+    {{ object.user.fio }}
+{% endblock %}
+{% block content %}
+    <section class="container">
+        <div class="seller_card">
+            <div class="seller_card_logo">
+                <a href="#"><img src="{{ object.user.photo.url }}" alt="Логотип"></a>
+                <div class="seller_card_info">
+                    <h2>{{ object.user.fio }}</h2>
+
+                    <div class="tag-container">
+                        <input type="text" id="tag-input" placeholder="Введите тег...">
+                        <ul id="suggestions" class="suggestions"></ul>
+                        <div id="selected-tags" class="selected-tags"></div>
+                    </div>
+                    <span>{{ form.as_p }}</span>
+                    <div class="seller_card_button">
+                        <a href="#">Телефон</a>
+                        {% if user_authenticated %}
+                            <a href="{% url 'chat:room' object.slug user.username %}">Чат</a>
+                        {% else %}
+                            <a href="{% url 'account:login' %}">Чат</a>
+                        {% endif %}
+
+                    </div>
+                </div>
+            </div>
+            <div class="seller_card_description">
+            </div>
+            <div class="seller_card_schedule">
+                <span><b>Удобное время для связи</b></span>
+                <span class="time">c 7:00-22:00</span>
+            </div>
+            {#            <div class="gallery">#}
+            {#                {% for service in object.get_all_services %}#}
+            {#                    <img src="{{ service.photo.url }}" class="gallery-img" alt="">#}
+            {#                {% endfor %}#}
+            {#            </div>#}
+            <div id="modal" class="modal">
+                <span class="close">&times;</span>
+                <img class="modal-content" id="modal-image">
+                <div id="caption"></div>
+                <a class="prev">&#10094;</a>
+                <a class="next">&#10095;</a>
+            </div>
+        </div>
+    </section>
+    <section class="container">
+        <div class="container-border">
+            <div class="arrow-icon">
+                <div class="info-content">
+
+                    <h2>Описание</h2>
+                    <div>
+                        <p>
+                            {{ object.description }}
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

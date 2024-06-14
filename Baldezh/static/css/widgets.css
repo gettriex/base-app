@@ -1,0 +1,42 @@
+.suggestions-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: auto;
+    position: absolute;
+    background-color: #fff;
+    z-index: 1000;
+    width: calc(100% - 2px);
+}
+
+.suggestions-list li {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.suggestions-list li:hover {
+    background-color: #f0f0f0;
+}
+
+.selected-tags {
+    margin-top: 10px;
+}
+
+.selected-tags .tag {
+    display: inline-block;
+    padding: 5px;
+    background-color: #e0e0e0;
+    border-radius: 3px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.selected-tags .tag .remove-tag {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    margin-left: 5px;
+}

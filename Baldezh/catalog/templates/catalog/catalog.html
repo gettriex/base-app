@@ -11,15 +11,15 @@
         </ul>
         <div class="catalog1">
             <h2 class="Name-catalog">Каталог услуг</h2>
-            <form method="GET" action="{% url 'catalog:index' %}">
+            <form class="catalog1-content" method="GET" action="{% url 'catalog:index' %}">
                 <input type="text" name="q" placeholder="Поиск...">
-                <input type="number" name="min_price" placeholder="Мин. цена">
-                <input type="number" name="max_price" placeholder="Макс. цена">
-                <input type="radio" name="sort_by_price" value="ascending" checked id="sort_by_price1"><label
-                    for="sort_by_price1">Сортировка по возрастанию</label>
-                <input type="radio" name="sort_by_price" value="descending" id="sort_by_price2"><label
-                    for="sort_by_price2">Сортировка по убыванию</label>
-                <button type="submit">Применить</button>
+                {#                <input type="number" name="min_price" placeholder="Мин. цена">#}
+                {#                <input type="number" name="max_price" placeholder="Макс. цена">#}
+                {#                <input type="radio" name="sort_by_price" value="ascending" checked id="sort_by_price1"><label#}
+                {#                    for="sort_by_price1">Сортировка по возрастанию</label>#}
+                {#                <input type="radio" name="sort_by_price" value="descending" id="sort_by_price2"><label#}
+                {#                    for="sort_by_price2">Сортировка по убыванию</label>#}
+                {#                <button type="submit">Применить</button>#}
             </form>
             <div class="catalog">
 
@@ -42,7 +42,7 @@
                                 </div>
                                 <span>{{ post.address }}</span>
                                 <div class="seller_card_description">
-                                    <p>{{ post.description }}</p>
+                                    <p class="text-overflow">{{ post.description }}</p>
 
                                     {% if post.get_all_services %}
                                         <div class="gallery2">
@@ -62,7 +62,7 @@
                                         <div class="services">
                                             <ul>
                                                 {% for service in post.get_all_services %}
-                                                    <li><a href="#">{{ service.name }}<span
+                                                    <li><a href="{% url 'catalog:detail' post.slug %}">{{ service.name }}<span
                                                             class="price">от {{ service.get_price }}р за штуку</span></a>
                                                     </li>
                                                 {% endfor %}
@@ -71,7 +71,11 @@
                                     {% endif %}
                                     <div class="seller_card_button">
                                         <a href="#">Телефон</a>
-                                        <a href="{% url 'chat:room' post.slug user.username %}">Чат</a>
+                                        {% if user.is_authenticated %}
+                                            <a href="{% url 'chat:room' post.slug user.username %}">Чат</a>
+                                        {% else %}
+                                            <a href="{% url 'account:login' %}">Чат</a>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>

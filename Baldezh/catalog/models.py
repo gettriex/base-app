@@ -31,10 +31,10 @@ class Provider(models.Model):
     category = models.ManyToManyField(Category, blank=True, verbose_name="Категория")
     description = models.TextField("Описание")
     status = models.CharField("Статус страницы пользователя", max_length=100, null=True, blank=True,
-                              choices=(("watching", "Рассмотрение"),
-                                       ("accepted", "Принят"),
-                                       ("denied", "Отклонён")),
-                              default="watching")
+                              choices=(("Рассмотрение", "Рассмотрение"),
+                                       ("Принят", "Принят"),
+                                       ("Отклонён", "Отклонён")),
+                              default="Рассмотрение")
     upper_in_top = models.BooleanField(default=False, verbose_name="Выше в топе")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -44,7 +44,7 @@ class Provider(models.Model):
         verbose_name_plural = "Объявления"
 
     def __str__(self):
-        return f'{self.user.fio}'
+        return f'{self.user.fio()}'
 
     def change_status_to_accepted(self):
         self.status = 'accepted'
@@ -99,7 +99,6 @@ class Service(models.Model):
     photo = models.ImageField("Фото услуги", upload_to='media/products')
     name = models.CharField("Название услуги", max_length=100)
     price = models.DecimalField("От какой цены услуга", max_digits=10, decimal_places=2)
-    extra = models.CharField(max_length=255, verbose_name='Дополнительно', null=True, blank=True)
 
     class Meta:
         verbose_name = "Услуга"
@@ -117,7 +116,7 @@ class Reviews(models.Model):
         'Provider', on_delete=models.CASCADE, related_name='reviews', verbose_name="Родительский пост"
     )
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name="Пользователь")
-    rating = models.IntegerField(choices=[(i, str(i)) for i in range(1, 6)])
+    rating = models.IntegerField(choices=[(i, str(i)) for i in range(1, 6)], default=5)
     comment = models.TextField("Сообщение", max_length=5000, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата отправки', blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, verbose_name='Дата обновления', blank=True, null=True)

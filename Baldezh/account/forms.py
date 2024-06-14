@@ -30,9 +30,9 @@ class CustomUserCreationForm(UserCreationForm):
         }
         widgets = {
             'email': forms.TextInput(attrs={'class': 'input-control', 'placeholder': 'E-mail'}),
-            'first_name': forms.TextInput(attrs={'class': 'input-control', 'placeholder': 'Имя'}),
-            'last_name': forms.TextInput(attrs={'class': 'input-control', 'placeholder': 'Фамилия'}),
-            'patronymic': forms.TextInput(attrs={'class': 'input-control', 'placeholder': 'Отчество'}),
+            'first_name': forms.TextInput(attrs={'class': 'input-control', 'placeholder': 'Имя', 'pattern': r'^[А-Яа-яЁё]+$'}),
+            'last_name': forms.TextInput(attrs={'class': 'input-control', 'placeholder': 'Фамилия', 'pattern': r'^[А-Яа-яЁё]+$'}),
+            'patronymic': forms.TextInput(attrs={'class': 'input-control', 'placeholder': 'Отчество', 'pattern': r'^[А-Яа-яЁё]+$'}),
         }
 
         def clean_email(self):
@@ -43,20 +43,26 @@ class CustomUserCreationForm(UserCreationForm):
 
 
 class UserEditForm(forms.ModelForm):
-    username = forms.CharField(disabled=True, label='Эл.Почта',
+    username = forms.CharField(disabled=True, label='Логин',
                                widget=forms.TextInput(attrs={'class': 'form-input'}))
     email = forms.CharField(disabled=True, label='Эл.Почта', widget=forms.TextInput(attrs={'class': 'form-input'}))
-    photo = forms.FileField(label='Эл.Почта', widget=forms.FileInput(attrs={'class': 'form-input',
+    photo = forms.FileField(label='Фото', widget=forms.FileInput(attrs={'class': 'form-input',
                                                                             'accept': "image/*"}))
 
     class Meta:
         model = get_user_model()
 
-        fields = ['first_name', 'last_name', 'patronymic', 'username', 'email', 'telephone', 'photo', 'description']
+        fields = ['first_name', 'last_name', 'patronymic', 'username', 'email', 'telephone', 'photo']
         labels = {
             'email': 'E-mail',
         }
         widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-input', 'pattern': r'^[А-Яа-яЁё]+$'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-input', 'pattern': r'^[А-Яа-яЁё]+$'}),
+            'patronymic': forms.TextInput(attrs={'class': 'form-input', 'pattern': r'^[А-Яа-яЁё]+$'}),
+            'telephone': forms.TextInput(attrs={'class': 'form-input'}),
+            'photo': forms.FileInput(attrs={'class': 'form-input',
+                                            'accept': "image/*"}),
             'email': forms.TextInput(attrs={'class': 'input-control', 'placeholder': 'E-mail'}),
         }
 

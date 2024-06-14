@@ -1,6 +1,7 @@
 from django import forms
 
-from catalog.models import Reviews, Service
+from catalog.models import Reviews, Service, Provider
+from catalog.widgets import TagSelectWidget
 
 
 class CreateServiceForm(forms.ModelForm):
@@ -10,8 +11,18 @@ class CreateServiceForm(forms.ModelForm):
             'photo',
             'name',
             'price',
-            'extra',
         )
+
+
+class BecomeProviderForm(forms.ModelForm):
+    class Meta:
+        model = Provider
+        fields = ('address', 'category', 'description', )
+        widgets = {
+            'address': forms.TextInput(attrs={'class': 'form-control'}),
+            'category': TagSelectWidget(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+        }
 
 
 class ReviewsForm(forms.ModelForm):
@@ -22,5 +33,5 @@ class ReviewsForm(forms.ModelForm):
             'parent': forms.HiddenInput(),
             'user': forms.HiddenInput(),
             'comment': forms.Textarea(),
-            'rating': forms.RadioSelect(),
+            'rating': forms.RadioSelect(attrs={'id': 'star', 'required': 'required'}, ),
         }

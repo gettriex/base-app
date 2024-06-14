@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="container-cabinet">
-        <h2>Личный кабинет</h2>
+        <h2>Личный информация</h2>
         <form method="POST" enctype="multipart/form-data" class="edit-form">
             {% csrf_token %}
 
@@ -16,6 +16,12 @@
                     <div class="form-error">{{ f.errors }}</div>
                 </div>
             {% endfor %}
+
+            {% if not user.is_creator %}
+            	<a class="want-be-provider" href="{% url 'catalog:become_provider' %}">Я хочу быть продавцом</a>
+            {% endif %} 
+
+
             <button class="button">Сохранить</button>
 
         </form>

@@ -40,7 +40,7 @@ class UserEdit(UpdateView, LoginRequiredMixin):
     form_class = UserEditForm
 
     def get_success_url(self):
-        return reverse_lazy('account:profile')
+        return reverse_lazy('catalog:index')
 
     def get_object(self, queryset=None):
         return get_user_model().objects.get(pk=self.request.user.pk)

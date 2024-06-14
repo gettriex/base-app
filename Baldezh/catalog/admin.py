@@ -78,7 +78,6 @@ class ServiceAdmin(admin.ModelAdmin):
         'provider',
         'name',
         'price',
-        'extra',
     )
 
     fields = (
@@ -86,7 +85,6 @@ class ServiceAdmin(admin.ModelAdmin):
         'photo',
         'name',
         'price',
-        'extra',
     )
     list_display_links = ('thumbnail', 'provider')
 

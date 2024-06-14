@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}Каталог{% endblock %}
+{% block title %}Главная{% endblock %}
 {% block content %}
     <div class="osn">
         <div class="search-container2">
@@ -9,16 +9,15 @@
                 <button><a href="hdhreff" class="hdhreff">Найти</a></button>
             </form>
         </div>
-        <div class="wrapper2">
+        <div class="categories">
             {% for category in categories %}
                 <a href="{% url 'catalog:category' category.slug %}">
-                    <div class="cat">
-                        <p class="catxt">{{ category.name }}</p>
-                        <img width="100" height="100" src="{{ category.photo.url }}" alt="category">
+                    <div class="category">
+                        <p>{{ category.name }}</p>
+                        <img src="{{ category.photo.url }}" alt="category">
                     </div>
                 </a>
             {% endfor %}
-
         </div>
     </div>
     <h2>Топ специалистов</h2>

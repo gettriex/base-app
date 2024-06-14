@@ -5,6 +5,23 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <title>{% block title %}{% endblock %}</title>
+    <script>
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+        const csrftoken = getCookie('csrftoken');
+    </script>
 </head>
 <body>
 <header>
@@ -13,20 +30,24 @@
         <div class="search-container">
             <nav class="navigation">
                 <ul class="navigation-content">
-                    <li><a href="{% url "catalog:create_service" %}">Создать объявление</a></li>
                     <li><a href="{% url "home" %}">Главная</a></li>
                     <li><a href="{% url "catalog:index" %}">Каталог услуг</a></li>
-
                     {% if user.is_authenticated %}
-                        <li>
+                        <a href="{% url 'chat:room' user.username user.username %}">Чат</a>
+                        {% if user.is_superuser or user.is_staff %}
+                            <a href="{% url 'chat:room' user.username user.username %}">Чат</a>
+                            <a href="{% url 'account:edit' %}">Личная информация</a>
+                            <a href="/admin/">Админ-панель</a>
+                        {% else %}
                             {% if user.is_creator %}
-                                <a href="{% url 'chat:room' user.username user.username %}"></a>
-                            {% endif %} 
-                            {% if user.is_superuser or user.is_staff %}
-                                <a href="/admin/">Админ-панель</a>
+                                <a href="{% url 'account:edit' %}">Личная информация</a>
                             {% else %}
-                                <a href="{% url 'account:profile' %}">{{ user.username }}</a>
+                                <a href="{% url 'account:edit' %}">Личный информация</a>
                             {% endif %}
+
+                        {% endif %}
+                        <li class="navigation-content-stance">
+
                             <form method="POST" action="{% url "account:logout" %}">{% csrf_token %}
                                 <button type="submit">Выйти</button>
                             </form>
@@ -37,8 +58,8 @@
                             </li>
                         </ul>
                     {% endif %}
-                    {#                <li><a href="#">Согласовать время</a></li>#}
-                    {#                <li><a id="modalBtn" class="modal-btn">Открыть модальное окно</a></li>#}
+
+
                 </ul>
             </nav>
         </div>
@@ -59,88 +80,38 @@
     {% block content %}
     {% endblock %}
 </main>
-{#    <footer class="footer">#}
-{#        <div class="footer__addr">#}
-{#            <h1 class="footer__logo">Логотипчик</h1>#}
-{#            <h2>Контакты</h2>#}
-{#            <address>#}
-{#                Какой-та адрес<br>#}
-{#                <a class="footer__btn" href="mailto:example@gmail.com">Наша электронная почта</a>#}
-{#            </address>#}
-{#        </div>#}
-{##}
-{#        <ul class="footer__nav">#}
-{#            <li class="nav__item">#}
-{#                <h2 class="nav__title">Популярные категории</h2>#}
-{##}
-{#                <ul class="nav__ul">#}
-{#                    <li>#}
-{#                        <a href="#">Полуфабрикаты</a>#}
-{#                    </li>#}
-{##}
-{#                    <li>#}
-{#                        <a href="#">Кондитерские изделия</a>#}
-{#                    </li>#}
-{##}
-{#                    <li>#}
-{#                        <a href="#">Эчпочмаки</a>#}
-{#                    </li>#}
-{#                </ul>#}
-{#            </li>#}
-{##}
-{#            <li class="nav__item nav__item--extra">#}
-{#                <h2 class="nav__title">Полезные ссылки</h2>#}
-{##}
-{#                <ul class="nav__ul nav__ul--extra">#}
-{#                    <li>#}
-{#                        <a href="#">Главная</a>#}
-{#                    </li>#}
-{##}
-{#                    <li>#}
-{#                        <a href="#">Каталог услуг</a>#}
-{#                    </li>#}
-{##}
-{#                    <li>#}
-{#                        <a href="#">Специалисты</a>#}
-{#                    </li>#}
-{##}
-{#                    <li>#}
-{#                        <a href="#">Еще</a>#}
-{#                    </li>#}
-{##}
-{#                    <li>#}
-{#                        <a href="#">Еще</a>#}
-{#                    </li>#}
-{##}
-{#                    <li>#}
-{#                        <a href="#">Еще</a>#}
-{#                    </li>#}
-{#                </ul>#}
-{#            </li>#}
-{##}
-{#            <li class="nav__item">#}
-{##}
-{#                <ul class="nav__ul">#}
-{#                    <li>#}
-{#                        <a href="#">Политика конфиденциальности</a>#}
-{#                    </li>#}
-{##}
-{#                    <li>#}
-{#                        <a href="#">Условия использования</a>#}
-{#                    </li>#}
-{#                </ul>#}
-{#            </li>#}
-{#        </ul>#}
-{##}
-{#        <div class="legal">#}
-{#            <p>© 2024 Все права защищены.</p>#}
-{#        </div>#}
-{#    </footer>#}
+<footer class="footer">
+
+    <div class="footer__addr">
+        <h1 class="footer__logo">SNACKSTAND</h1>
+
+    </div>
+
+
+    <div class="legal">
+        <p>© 2024 Все права защищены.</p>
+    </div>
+
+</footer>
 
 
 <script src="{% static 'js/scripts.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
 <script src="https://api-maps.yandex.ru/2.1/?apikey=e2cba001-8644-4665-849e-5746d3a74eb9&lang=ru_RU"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Добавление маски на поля при загрузке страницы
+        $('#id_telephone').mask('+7(000)000-00-00');
 
+
+        $('#id_telephone').on('input', function () {
+            $(this).mask('+7(000)000-00-00');
+        });
+    });
+</script>
 {% block scriptblock %}
 {% endblock %}
 </body>

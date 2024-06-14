@@ -1,10 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
+from django.db.models import Q
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, DeleteView, CreateView
 
-from catalog.forms import ReviewsForm, CreateServiceForm
+from catalog.forms import ReviewsForm, CreateServiceForm, BecomeProviderForm
 from catalog.models import Category, Service, Reviews, Provider
 
 
@@ -16,24 +17,14 @@ class CatalogListView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        queryset = Provider.objects.filter(status='accepted').order_by('upper_in_top', 'user__username', 'updated_at')
+        queryset = Provider.objects.filter(status='Принят').order_by('upper_in_top', 'user__username', 'updated_at')
 
         # Поиск по названию
         query = self.request.GET.get('q')
         if query:
-            queryset = queryset.filter(name__icontains=query)
-
-        # Фильтрация по цене
-        min_price = self.request.GET.get('min_price')
-        max_price = self.request.GET.get('max_price')
-        if min_price and max_price:
-            queryset = queryset.filter(price__gte=min_price, price__lte=max_price)
-
-        sort_by_price = self.request.GET.get('sort_by_price')
-        if sort_by_price == 'ascending':
-            queryset = queryset.order_by('price')
-        elif sort_by_price == 'descending':
-            queryset = queryset.order_by('-price')
+            queryset = queryset.filter(
+                Q(user__first_name__icontains=query) | Q(user__patronymic__icontains=query) | Q(
+                    user__last_name__icontains=query) | Q(description__icontains=query))
 
         return queryset
 
@@ -43,6 +34,16 @@ class CatalogListView(ListView):
         return context
 
 
+def get_categories(request):
+    query = request.GET.get('query', '')
+    if query:
+        categories = Category.objects.filter(name__icontains=query)
+    else:
+        categories = Category.objects.all()
+    category_list = list(categories.values('name'))
+    return JsonResponse(category_list, safe=False)
+
+
 class ShowCategoryView(ListView):
     model = Provider
     template_name = 'catalog/catalog.html'
@@ -50,9 +51,9 @@ class ShowCategoryView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return Provider.objects.filter(status='accepted',
-                                      category__slug=self.kwargs['cat_slug']).order_by('user',
-                                                                                       'updated_at')
+        return Provider.objects.filter(status='Принят',
+                                       category__slug=self.kwargs['cat_slug']).order_by('user',
+                                                                                        'updated_at')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -67,13 +68,14 @@ class ShowDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Получаем текущего пользователя
-        user = self.request.user
         # Получаем объект поста
         service = self.object
-        # Передаем текущего пользователя и объект поста в форму при ее создании
-        context['reviews_form'] = ReviewsForm(initial={'user': user, 'parent': service})
-        context['user_has_review'] = self.object.reviews.filter(user=user).exists()
+        # Получаем текущего пользователя
+        if self.request.user.is_authenticated:
+            user = self.request.user
+            context['reviews_form'] = ReviewsForm(initial={'user': user, 'parent': service})
+            # Передаем текущего пользователя и объект поста в форму при ее создании
+            context['user_has_review'] = self.object.reviews.filter(user=user).exists()
         return context
 
     def post(self, request, *args, **kwargs):
@@ -83,6 +85,13 @@ class ShowDetailView(DetailView):
             return redirect('catalog:detail', service_slug=review.parent.slug)
         else:
             return self.render_to_response(self.get_context_data(form=form))
+
+
+class BecomeProvider(LoginRequiredMixin, CreateView):
+    model = Provider
+    form_class = BecomeProviderForm
+    template_name = 'catalog/become-provider.html'
+    success_url = reverse_lazy('catalog:catalog')
 
 
 class CreateService(LoginRequiredMixin, CreateView):
