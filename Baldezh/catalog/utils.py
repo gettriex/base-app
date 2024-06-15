@@ -12,7 +12,7 @@ def confirm(service):
     #     [service.creator.email],
     #     fail_silently=False,
     # )
-    service.slug = slugify(service.name)
+    service.slug = slugify(service.user.username)
     service.change_status_to_accepted()
     return True
 

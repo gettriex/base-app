@@ -27,6 +27,8 @@ class Provider(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name='Страница пользователя',
                              related_name='provider', null=True, blank=True)
     slug = models.SlugField(max_length=255, unique=True, db_index=True, verbose_name="URL", null=True, blank=True)
+    best_time_start = models.TimeField(null=True, blank=True)
+    best_time_end = models.TimeField(null=True, blank=True)
     address = models.CharField(max_length=255, verbose_name='Адрес местонахождения', null=True, blank=True)
     category = models.ManyToManyField(Category, blank=True, verbose_name="Категория")
     description = models.TextField("Описание")
@@ -47,11 +49,11 @@ class Provider(models.Model):
         return f'{self.user.fio()}'
 
     def change_status_to_accepted(self):
-        self.status = 'accepted'
+        self.status = 'Принят'
         self.save()
 
     def change_status_to_denied(self):
-        self.status = 'denied'
+        self.status = 'Отклонён'
         self.save()
 
     def average_rating(self):

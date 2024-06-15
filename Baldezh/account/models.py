@@ -20,3 +20,7 @@ class User(AbstractUser):
 
     def fio(self):
         return f'{self.first_name} {self.last_name} {self.patronymic}'
+
+    def become_creator(self):
+        self.is_creator = True
+        self.save()

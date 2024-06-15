@@ -3,67 +3,111 @@
 {% load static %}
 
 {% block title %}
-    {{ object.user.fio }}
+    {{ user.fio }}
 {% endblock %}
 {% block content %}
-    <section class="container">
-        <div class="seller_card">
-            <div class="seller_card_logo">
-                <a href="#"><img src="{{ object.user.photo.url }}" alt="Логотип"></a>
-                <div class="seller_card_info">
-                    <h2>{{ object.user.fio }}</h2>
-
-                    <div class="tag-container">
-                        <input type="text" id="tag-input" placeholder="Введите тег...">
-                        <ul id="suggestions" class="suggestions"></ul>
-                        <div id="selected-tags" class="selected-tags"></div>
-                    </div>
-                    <span>{{ form.as_p }}</span>
-                    <div class="seller_card_button">
-                        <a href="#">Телефон</a>
-                        {% if user_authenticated %}
-                            <a href="{% url 'chat:room' object.slug user.username %}">Чат</a>
-                        {% else %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <section class="container">
+            <div class="form-error">{{ form.errors }}</div>
+            <div class="seller_card">
+                <div class="seller_card_logo">
+                    <a href="#"><img src="{{ user.photo.url }}" alt="Логотип"></a>
+                    <div class="seller_card_info">
+                        <h2>{{ user.fio }}</h2>
+                        {{ form.address }}
+                        <span></span>
+                        <div class="seller_card_button">
+                            <a href="#">Телефон</a>
                             <a href="{% url 'account:login' %}">Чат</a>
-                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="seller_card_description">
+                </div>
+                <div class="seller_card_schedule">
+                    <span><b>Удобное время для связи</b></span>
+                    <span class="time">c {{ form.best_time_start }}-{{ form.best_time_end }}</span>
+                </div>
 
+                {{ form.category }}
+                {{ form.category.errors }}
+
+
+                <div id="modal" class="modal">
+                    <span class="close">&times;</span>
+                    <img class="modal-content" id="modal-image">
+                    <div id="caption"></div>
+                    <a class="prev">&#10094;</a>
+                    <a class="next">&#10095;</a>
+                </div>
+            </div>
+        </section>
+        <section class="container">
+            <div class="container-border">
+                <div>
+                    <div class="info-content">
+
+                        <h2><label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label></h2>
+                        <div>
+                            <p>
+                                {{ form.description }}
+                            </p>
+                            <div>
+                                {{ form.description.error }}
+                            </div>
+                        </div>
+                        <button type="submit">Отправить</button>
                     </div>
                 </div>
             </div>
-            <div class="seller_card_description">
-            </div>
-            <div class="seller_card_schedule">
-                <span><b>Удобное время для связи</b></span>
-                <span class="time">c 7:00-22:00</span>
-            </div>
-            {#            <div class="gallery">#}
-            {#                {% for service in object.get_all_services %}#}
-            {#                    <img src="{{ service.photo.url }}" class="gallery-img" alt="">#}
-            {#                {% endfor %}#}
-            {#            </div>#}
-            <div id="modal" class="modal">
-                <span class="close">&times;</span>
-                <img class="modal-content" id="modal-image">
-                <div id="caption"></div>
-                <a class="prev">&#10094;</a>
-                <a class="next">&#10095;</a>
-            </div>
-        </div>
-    </section>
-    <section class="container">
-        <div class="container-border">
-            <div class="arrow-icon">
-                <div class="info-content">
+        </section>
 
-                    <h2>Описание</h2>
-                    <div>
-                        <p>
-                            {{ object.description }}
-                        </p>
-                    </div>
+        {% if user.is_creator %}
 
+            <section class="container">
+                <div class="container-border">
+                    <h2>Услуги</h2>
+                    <a href="{% url 'catalog:create_service' %}">Добавить услугу</a>
+                    {% if object.get_all_services %}
+
+                        <div class="services">
+                            <ul>
+                                {% for service in object.get_all_services %}
+                                    <li><a href="{% url 'catalog:detail' object.slug %}">{{ service.name }}<span
+                                            class="price">от {{ service.get_price }}р за штуку</span></a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
                 </div>
-            </div>
-        </div>
-    </section>
+            </section>
+
+            {% if object.get_all_services %}
+                <section class="container">
+                    <div class="container-border">
+                        <h2>Иллюстрации</h2>
+                        <div class="slider">
+                            <div class="main-image">
+                                <img id="currentImage" src="" alt="Main Image">
+                            </div>
+                            <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
+                            <button class="next" onclick="changeSlide(1)">&#10095;</button>
+                            <div class="thumbnail-container">
+                                <div class="thumbnails">
+                                    {% for service in object.get_all_services %}
+                                        <img src="{{ service.photo.url }}" alt="{{ service.photo.name }}"
+                                             onclick="showImage({{ forloop.counter0 }})">
+                                    {% endfor %}
+                                    <!-- Добавьте больше изображений здесь -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            {% endif %}
+
+        {% endif %}
+    </form>
 {% endblock %}

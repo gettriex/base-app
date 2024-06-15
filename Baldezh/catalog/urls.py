@@ -9,6 +9,7 @@ urlpatterns = [
     path('service/<slug:service_slug>/delete-review/<int:pk>', views.delete_review, name='delete_review'),
     path('become-provider/', views.BecomeProvider.as_view(), name='become_provider'),
     path('get-categories/', views.get_categories, name='get-categories'),
+    path('provider/edit/', views.ProviderEdit.as_view(), name='edit'),
 ]
 
 app_name = 'catalog'

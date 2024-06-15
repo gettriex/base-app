@@ -3,7 +3,8 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy, reverse
-from django.views.generic import ListView, DetailView, DeleteView, CreateView
+from django.views.generic import ListView, DetailView, DeleteView, CreateView, UpdateView
+from slugify import slugify
 
 from catalog.forms import ReviewsForm, CreateServiceForm, BecomeProviderForm
 from catalog.models import Category, Service, Reviews, Provider
@@ -40,7 +41,8 @@ def get_categories(request):
         categories = Category.objects.filter(name__icontains=query)
     else:
         categories = Category.objects.all()
-    category_list = list(categories.values('name'))
+
+    category_list = [{'id': category.id, 'name': category.name} for category in categories]
     return JsonResponse(category_list, safe=False)
 
 
@@ -91,20 +93,54 @@ class BecomeProvider(LoginRequiredMixin, CreateView):
     model = Provider
     form_class = BecomeProviderForm
     template_name = 'catalog/become-provider.html'
-    success_url = reverse_lazy('catalog:catalog')
+    success_url = reverse_lazy('catalog:index')
+
+    def form_valid(self, form):
+        # Получаем текущего пользователя
+        user = self.request.user
+        self.request.user.become_creator()
+        # Устанавливаем значение поля 'creator' в экземпляре формы
+        form.instance.user = user
+        # Вызываем метод form_valid родительского класса
+        return super().form_valid(form)
+
+
+class ProviderEdit(UpdateView, LoginRequiredMixin):
+    model = Provider
+    template_name = 'catalog/become-provider.html'
+    form_class = BecomeProviderForm
+
+    def get_success_url(self):
+        return reverse_lazy('catalog:index')
+
+    def get_object(self, queryset=None):
+        return Provider.objects.get(user=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Получаем объект поста
+        service = self.object
+        # Получаем текущего пользователя
+        if self.request.user.is_authenticated:
+            user = self.request.user
+            context['reviews_form'] = ReviewsForm(initial={'user': user, 'parent': service})
+            # Передаем текущего пользователя и объект поста в форму при ее создании
+            context['user_has_review'] = self.object.reviews.filter(user=user).exists()
+        return context
 
 
 class CreateService(LoginRequiredMixin, CreateView):
     model = Service
     template_name = 'catalog/add_service.html'
     form_class = CreateServiceForm
-    success_url = reverse_lazy('catalog:index')
+    success_url = reverse_lazy('catalog:edit')
 
     def form_valid(self, form):
         # Получаем текущего пользователя
-        user = self.request.user
+
+        user = Provider.objects.get(user=self.request.user)
         # Устанавливаем значение поля 'creator' в экземпляре формы
-        form.instance.creator = user
+        form.instance.provider = user
         # Вызываем метод form_valid родительского класса
         return super().form_valid(form)
 

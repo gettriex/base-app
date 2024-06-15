@@ -33,16 +33,17 @@
                     <li><a href="{% url "home" %}">Главная</a></li>
                     <li><a href="{% url "catalog:index" %}">Каталог услуг</a></li>
                     {% if user.is_authenticated %}
-                        <a href="{% url 'chat:room' user.username user.username %}">Чат</a>
+                        <li><a href="{% url 'chat:room' user.username user.username %}">Чат</a></li>
                         {% if user.is_superuser or user.is_staff %}
-                            <a href="{% url 'chat:room' user.username user.username %}">Чат</a>
-                            <a href="{% url 'account:edit' %}">Личная информация</a>
-                            <a href="/admin/">Админ-панель</a>
+                            <li><a href="{% url 'chat:room' user.username user.username %}">Чат</a></li>
+                            <li><a href="{% url 'account:edit' %}">Личная информация</a></li>
+                            <li><a href="/admin/">Админ-панель</a></li>
                         {% else %}
                             {% if user.is_creator %}
-                                <a href="{% url 'account:edit' %}">Личная информация</a>
+                                <li><a href="{% url 'account:edit' %}">Личная информация</a></li>
+                                <li><a href="{% url 'catalog:edit' %}">Страница продавца</a></li>
                             {% else %}
-                                <a href="{% url 'account:edit' %}">Личный информация</a>
+                                <li><a href="{% url 'account:edit' %}">Личная информация</a></li>
                             {% endif %}
 
                         {% endif %}

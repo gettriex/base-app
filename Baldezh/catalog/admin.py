@@ -30,6 +30,8 @@ class ProviderAdmin(admin.ModelAdmin):
     fields = (
         'user',
         'slug',
+        'best_time_start',
+        'best_time_end',
         'address',
         'category',
         'description',

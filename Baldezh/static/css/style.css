@@ -2296,61 +2296,60 @@ input.sp-selector-5:checked ~ .sp-content .sp-slider > li:nth-child(5) {
     margin-top: 10px;
 }
 
-/*.tag-container {*/
-/*    width: 300px;*/
-/*    margin: 20px auto;*/
-/*}*/
+.tag-container {
+    margin: 20px auto;
+}
 
-/*#tag-input {*/
-/*    width: 100%;*/
-/*    padding: 8px;*/
-/*    box-sizing: border-box;*/
-/*}*/
+#tag-input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
 
-/*.suggestions {*/
-/*    list-style: none;*/
-/*    padding: 0;*/
-/*    margin: 0;*/
-/*    border: 1px solid #ccc;*/
-/*    max-height: 150px;*/
-/*    overflow-y: auto;*/
-/*    display: none;*/
-/*}*/
+.suggestions-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    max-height: 150px;
+    overflow-y: auto;
+    display: none;
+}
 
-/*.suggestions li {*/
-/*    padding: 8px;*/
-/*    cursor: pointer;*/
-/*}*/
+.suggestions-list li {
+    padding: 8px;
+    cursor: pointer;
+}
 
-/*.suggestions li:hover {*/
-/*    background-color: #eee;*/
-/*}*/
+.suggestions-list li:hover {
+    background-color: #eee;
+}
 
-/*.selected-tags {*/
-/*    margin-top: 10px;*/
-/*    display: flex;*/
-/*    flex-wrap: wrap;*/
-/*}*/
+.selected-tags {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+}
 
-/*.tag {*/
-/*    background-color: #ccc;*/
-/*    border-radius: 20px;*/
-/*    padding: 5px 10px;*/
-/*    margin: 5px;*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*}*/
+.tag {
+    background-color: #ccc;
+    border-radius: 20px;
+    padding: 5px 10px;
+    margin: 5px;
+    display: flex;
+    align-items: center;
+}
 
-/*.tag span {*/
-/*    margin-right: 5px;*/
-/*}*/
+.tag span {
+    margin-right: 5px;
+}
 
-/*.tag .remove-tag {*/
-/*    background: none;*/
-/*    border: none;*/
-/*    cursor: pointer;*/
-/*    font-size: 16px;*/
-/*}*/
+.tag .remove-tag {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
 
 .container-cabinet {
     width: 50%;
@@ -2632,8 +2631,6 @@ label {
     color: white;
 }
 .form-control {
-    background: none;
-    border: none;
     cursor: pointer;
     display: flex;
     align-items: center;

@@ -1,6 +1,6 @@
 from django import forms
 
-from catalog.models import Reviews, Service, Provider
+from catalog.models import Reviews, Service, Provider, Category
 from catalog.widgets import TagSelectWidget
 
 
@@ -12,15 +12,26 @@ class CreateServiceForm(forms.ModelForm):
             'name',
             'price',
         )
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Название услуги', 'pattern': r'^[А-Яа-яЁё]+$'}),
+        }
 
 
 class BecomeProviderForm(forms.ModelForm):
+    # category = forms.ModelMultipleChoiceField(
+    #     queryset=Category.objects.all(),
+    #     widget=TagSelectWidget(attrs={'class': 'form-control'}),
+    #     required=False
+    # )
+
     class Meta:
         model = Provider
-        fields = ('address', 'category', 'description', )
+        fields = ('best_time_start', 'best_time_end', 'address', 'category', 'description',)
         widgets = {
-            'address': forms.TextInput(attrs={'class': 'form-control'}),
-            'category': TagSelectWidget(attrs={'class': 'form-control'}),
+            'best_time_start': forms.TimeInput(attrs={'type': 'time'}),
+            'best_time_end': forms.TimeInput(attrs={'type': 'time'}),
+            'address': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Адрес'}),
+            'category': forms.SelectMultiple(attrs={}),
             'description': forms.Textarea(attrs={'class': 'form-control'}),
         }
 
