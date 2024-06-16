@@ -25,7 +25,8 @@ class CatalogListView(ListView):
         if query:
             queryset = queryset.filter(
                 Q(user__first_name__icontains=query) | Q(user__patronymic__icontains=query) | Q(
-                    user__last_name__icontains=query) | Q(description__icontains=query))
+                    user__last_name__icontains=query) | Q(description__icontains=query) | Q(
+                    services__name__icontains=query))
 
         return queryset
 
