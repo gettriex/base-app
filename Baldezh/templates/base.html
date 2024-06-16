@@ -20,13 +20,14 @@
             }
             return cookieValue;
         }
+
         const csrftoken = getCookie('csrftoken');
     </script>
 </head>
 <body>
 <header>
     <div class="contik">
-        <a href="{% url "home" %}">SNACKSTAND</a>
+        <a href="{% url "home" %}">Готовая еда</a>
         <div class="search-container">
             <nav class="navigation">
                 <ul class="navigation-content">
@@ -35,7 +36,6 @@
                     {% if user.is_authenticated %}
                         <li><a href="{% url 'chat:room' user.username user.username %}">Чат</a></li>
                         {% if user.is_superuser or user.is_staff %}
-                            <li><a href="{% url 'chat:room' user.username user.username %}">Чат</a></li>
                             <li><a href="{% url 'account:edit' %}">Личная информация</a></li>
                             <li><a href="/admin/">Админ-панель</a></li>
                         {% else %}
@@ -65,17 +65,6 @@
             </nav>
         </div>
     </div>
-    {#    <input class="menu-icon" type="checkbox" id="menu-icon" name="menu-icon"/>#}
-    {#    <label for="menu-icon"></label>#}
-
-    {#    <div id="myModal" class="modal">#}
-    {#        <div class="modal-content">#}
-    {#            <span class="close">&times;</span>#}
-    {#            <h2>Выберите адрес на карте:</h2>#}
-    {#            <input type="text" id="search" placeholder="Введите или выберите адрес">#}
-    {#            <div id="map" class="map"></div>#}
-    {#        </div>#}
-    {#    </div>#}
 </header>
 <main>
     {% block content %}
@@ -84,7 +73,7 @@
 <footer class="footer">
 
     <div class="footer__addr">
-        <h1 class="footer__logo">SNACKSTAND</h1>
+        <h1 class="footer__logo">Готовая еда</h1>
 
     </div>
 

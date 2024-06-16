@@ -57,7 +57,7 @@
                                 {{ form.description.error }}
                             </div>
                         </div>
-                        <button type="submit">Отправить</button>
+                        <button type="submit" class="send">Сохранить</button>
                     </div>
                 </div>
             </div>
@@ -67,8 +67,8 @@
 
             <section class="container">
                 <div class="container-border">
-                    <h2>Услуги</h2>
-                    <a href="{% url 'catalog:create_service' %}">Добавить услугу</a>
+                    <h2 class="Services">Услуги</h2>
+                    <a href="{% url 'catalog:create_service' %}" class="create-ser">Добавить услугу</a>
                     {% if object.get_all_services %}
 
                         <div class="services">
@@ -92,8 +92,8 @@
                             <div class="main-image">
                                 <img id="currentImage" src="" alt="Main Image">
                             </div>
-                            <button class="prev" onclick="changeSlide(-1)">&#10094;</button>
-                            <button class="next" onclick="changeSlide(1)">&#10095;</button>
+{#                            <button class="prev" onclick="changeSlide(-1)">&#10094;</button>#}
+{#                            <button class="next" onclick="changeSlide(1)">&#10095;</button>#}
                             <div class="thumbnail-container">
                                 <div class="thumbnails">
                                     {% for service in object.get_all_services %}

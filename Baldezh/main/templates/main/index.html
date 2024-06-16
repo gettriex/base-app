@@ -3,12 +3,7 @@
 {% block title %}Главная{% endblock %}
 {% block content %}
     <div class="osn">
-        <div class="search-container2">
-            <form action="">
-                <input type="text" placeholder="Чем вам помочь?" name="search">
-                <button><a href="hdhreff" class="hdhreff">Найти</a></button>
-            </form>
-        </div>
+    <h1>Категории услуг</h1>
         <div class="categories">
             {% for category in categories %}
                 <a href="{% url 'catalog:category' category.slug %}">
@@ -20,7 +15,7 @@
             {% endfor %}
         </div>
     </div>
-    <h2>Топ специалистов</h2>
+    <h2 class="Top">Топ специалистов</h2>
     <div class="swiper-wrapper popular-salons">
         <div class="swiper-slide item swiper-slide-prev" style="margin-right: 58px;">
             <div class="mini" data-toggle="hover-element">
