@@ -24,9 +24,12 @@ class CatalogListView(ListView):
         query = self.request.GET.get('q')
         if query:
             queryset = queryset.filter(
-                Q(user__first_name__icontains=query) | Q(user__patronymic__icontains=query) | Q(
-                    user__last_name__icontains=query) | Q(description__icontains=query) | Q(
-                    services__name__icontains=query))
+                Q(user__first_name__iregex=query) |
+                Q(user__patronymic__iregex=query) |
+                Q(user__last_name__iregex=query) |
+                Q(description__iregex=query) |
+                Q(services__name__iregex=query)
+            ).distinct()
 
         return queryset
 
@@ -34,7 +37,6 @@ class CatalogListView(ListView):
         context = super().get_context_data(**kwargs)
         context['categories'] = Category.objects.all()
         return context
-
 
 def get_categories(request):
     query = request.GET.get('query', '')

@@ -3,7 +3,7 @@
 {% block title %}Главная{% endblock %}
 {% block content %}
     <div class="osn">
-    <h1>Категории услуг</h1>
+        <h1>Категории услуг</h1>
         <div class="categories">
             {% for category in categories %}
                 <a href="{% url 'catalog:category' category.slug %}">
@@ -17,69 +17,14 @@
     </div>
     <h2 class="Top">Топ специалистов</h2>
     <div class="swiper-wrapper popular-salons">
-        <div class="swiper-slide item swiper-slide-prev" style="margin-right: 58px;">
-            <div class="mini" data-toggle="hover-element">
-                <div class="icon img-box"
-                     style="background-image: url(static/img/image.65448.1624117.jpg); -webkit-background-size: cover;"></div>
-                <a href=""><b>Елена Васильева</b></a>
-            </div>
-        </div>
-        <div class="swiper-slide item swiper-slide-active" style="margin-right: 40px;">
-            <div class="mini" data-toggle="hover-element">
-                <div class="icon img-box"
-                     style="background-image: url(static/img/image.65232.1624117.jpg); -webkit-background-size: cover;"></div>
-                <b>Мария Петрова</b>
-            </div>
-        </div>
-        <div class="swiper-slide item swiper-slide-next" style="margin-right: 58px;">
-
-            <div class="swiper-slide item" style="margin-right: 10px;">
-
+        {% for specialist in specialists %}
+            <div class="swiper-slide item swiper-slide-prev" style="margin-right: 58px;">
                 <div class="mini" data-toggle="hover-element">
-                    <div class="icon img-box"
-                         style="background-image: url(static/img/image.65454.1624117.jpg); -webkit-background-size: cover;"></div>
-                    <b>Иван Смирнов</b>
+                    <img class="icon img-box"
+                         style="-webkit-background-size: cover;" src="{{ specialist.user.photo.url }}">
+                    <a href=""><b>{{ specialist.user.fio }}</b></a>
                 </div>
             </div>
-            <div class="swiper-slide item" style="margin-right: 20px;">
-            </div>
-        </div>
-        <div class="swiper-slide item swiper-slide-next" style="margin-right: 20px;">
-
-            <div class="swiper-slide item" style="margin-right: 40px;">
-
-                <div class="swiper-slide item swiper-slide-prev" style="margin-right: 40px;">
-                    <div class="mini" data-toggle="hover-element">
-                        <div class="icon img-box"
-                             style="background-image: url(static/img/image.65472.1624117.jpg); -webkit-background-size: cover;"></div>
-                        <b>Анна Иванова</b>
-                    </div>
-                </div>
-                <div class="swiper-slide item" style="margin-right: 55px;">
-                </div>
-            </div>
-            <div class="swiper-slide item swiper-slide-next" style="margin-right: 20px;">
-
-                <div class="swiper-slide item" style="margin-right: 40px;">
-
-                    <div class="swiper-slide item swiper-slide-prev" style="margin-right: 40px;">
-                        <div class="mini" data-toggle="hover-element">
-                            <div class="icon img-box"
-                                 style="background-image: url(static/img/image.65477.1624117.jpg); -webkit-background-size: cover;"></div>
-                            <b>Николай Попов</b>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide item swiper-slide-next">
-                    <div class="swiper-slide item swiper-slide-prev">
-                        <div class="mini" data-toggle="hover-element">
-                            <div class="icon img-box"
-                                 style="background-image: url(static/img/image.65499.1624117.jpg); -webkit-background-size: cover;"></div>
-                            <b>Алексей Кузнецов</b>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 {% endblock %}
